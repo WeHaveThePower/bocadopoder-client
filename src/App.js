@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Registrarproducto } from './Components/Productos/RegistrarProductos/Registrarproducto'
@@ -27,3 +25,5 @@ function App() {
 }
 
 export default App;
+
+//this is a test yes this is a test
