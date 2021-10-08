@@ -12,13 +12,15 @@ function App() {
   
   return (  
     <div className="App">
-      <Button style={{zIndex:1600}} variant="contained" onClick={myToggle}>
-          Presióname
+      <Button color="secondary" style={{zIndex:1600}} variant="contained" onClick={myToggle}>
+          Presióname muchas veces
       </Button>
       <section>
-        {(estado % 4 === 0) ? <Registrarproducto/> : null}
-        {(estado % 3 === 0) ? <BasicReactApp/> : null}
-        {(estado % 2 === 0) ? <Dashboard/> : null}
+        {(estado % 4 === 0) ? <BasicReactApp/> : (
+          (estado % 3 === 0) ? <Dashboard/> : (
+            (estado % 2 === 0) ? <Registrarproducto/> : null
+          )
+        )}
       </section>
     </div>
   );
