@@ -1,37 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-import { Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Registrarproducto } from './Components/Registrarproducto';
+// import logo from './logo.svg';
+// import './App.css';
+import Button from '@mui/material/Button';
 import { useState } from 'react';
+import { Registrarproducto } from './Components/Productos/RegistrarProductos/Registrarproducto'
+import BasicReactApp from './Components/zzPruebas/zzBasicReactApp/BasicReactApp'
+import Dashboard from './Components/zzPruebas/zzTestDashboard/Dashboard'
 
 function App() {
-  const [estado, setEstado] = useState(false);
-  const myToggle = ()=> setEstado(!estado);
+  const [estado, setEstado] = useState(1);
+  const myToggle = ()=> setEstado(estado+1);
   
-  return (
-  
+  return (  
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <button className="btn btn-primary" onClick={myToggle} data-bs-toggle="modal" data-bs-target="#myModalNewProd">
-          Let's Go
-        </button>
-        {estado ? <Registrarproducto accion={myToggle} estado={estado}/> : null}
-        
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        
-      </header>
+      <Button style={{zIndex:1600}} variant="contained" onClick={myToggle}>
+          Presióname
+      </Button>
+      <section>
+        {(estado % 4 === 0) ? <Registrarproducto/> : null}
+        {(estado % 3 === 0) ? <BasicReactApp/> : null}
+        {(estado % 2 === 0) ? <Dashboard/> : null}
+      </section>
     </div>
   );
 }
