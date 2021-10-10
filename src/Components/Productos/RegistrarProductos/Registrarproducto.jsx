@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 export function Registrarproducto({accion, estado}) {
     return (
         <Fragment>
-            {/*<div className="modal fade text-start" id="myModalNewProd" tabIndex="-1" aria-labelledby="myModalLabel" aria-hidden="true">*/}
+            {/* <div className="modal fade text-start show" id="myModalNewProd" tabIndex="-1" aria-labelledby="myModalLabel" aria-hidden="true"> */}
                 <div className="modal-dialog text-start text-black fs-6">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -49,7 +49,7 @@ export function Registrarproducto({accion, estado}) {
                         </div>
                     </div>
                 </div>
-            {/*</div>*/}
+            {/* </div> */}
         </Fragment>
     )
 }
