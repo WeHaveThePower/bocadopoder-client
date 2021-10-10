@@ -10,17 +10,24 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import { MainListItems, SecondaryListItems } from './ListItems';
+
+
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Chart from '../zzPruebas/zzTestDashboard/Chart';
+import Deposits from '../zzPruebas/zzTestDashboard/Deposits';
+import Orders from '../zzPruebas/zzTestDashboard/Orders';
+
+//MisImportaciones
+import { green, orange } from '@mui/material/colors';
+import { MainContentProductos } from '../Productos/MainContentProductos';
 
 function Copyright(props) {
   return (
@@ -81,12 +88,26 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+  palette: {
+    primary: {
+      main: orange[500],
+    },
+    secondary: {
+      main: green[500],
+    },
+  },
+});
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const [boardCounter, setBoardCounter] = React.useState(3);
+  const toggleContenido = (n) => {
+    setBoardCounter(n);
   };
 
   return (
@@ -118,7 +139,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              BOCADOPODER by WeHaveThePower
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -141,9 +162,9 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List>{mainListItems}</List>
+          <MainListItems clickAction={toggleContenido}/>
           <Divider />
-          <List>{secondaryListItems}</List>
+          <SecondaryListItems/>
         </Drawer>
         <Box
           component="main"
@@ -158,50 +179,25 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          
+          {/* INICIA cuerpo módulos nuestros*/}
+          <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                  
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
+              {boardCounter === 3 ? <MainContentProductos/> : null}
+              {/* {boardCounter === 3 ? </> : null}
+              {boardCounter === 3 ? </> : null}
+              {boardCounter === 3 ? </> : null} */}
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
           </Container>
+
+          {/* FIN cuerpo módulos nuestros*/}
+          <Copyright sx={{ pt: 4 }} />
         </Box>
       </Box>
     </ThemeProvider>
   );
 }
 
-export default function Dashboard() {
+export default function DashboardWHTP() {
   return <DashboardContent />;
 }
