@@ -3,14 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { nanoid } from 'nanoid'
 import { useState } from 'react'
 
-export function Registrarproducto({ closeAction }) {
-    const [stRegistro, setStRegistro] = useState({id:'Generar  > >', descripcion:'', valor:'', estado:true}); //, estado:true
+export function Actualizarproducto({ closeAction }) {
+    const [stRegistro, setStRegistro] = useState({id:'', descripcion:'', valor:'', estado:true}); //, estado:true
 
     const hdlAsignID = ()=>{
-        // const newReg = {...stRegistro}
-        // newReg.id = nanoid(8)
+        
+        /*OJO nota 1 : no están sincronizados los id*/
         setStRegistro((prevState)=>({...prevState, id:nanoid(8)})) //{id:nanoid(8), descripcion:stRegistro.descripcion, valor:stRegistro.valor});
-        //setStRegistro({id:nanoid(8), descripcion:stRegistro.descripcion, valor:stRegistro.valor});
     }
 
     const hdlDesc = (e)=>{
@@ -45,32 +44,29 @@ export function Registrarproducto({ closeAction }) {
 
     return (
         <Fragment>
-            <p>Ingrese los datos del nuevo producto.</p>
             <form onSubmit={hdlForm}>
                 {/* <!-- ID --> */}
                 <div className="mb-3">
-                    <label className="form-label" htmlFor="inputProductID">
-                        ID del producto {/* <!-- txt --> */}
-                    </label>
-                    <input onClick={hdlAsignID} value={stRegistro.id} disabled className="form-control" id="inputProductID" aria-describedby="emailHelp"/>
-                    <button type="button" class="float-end" onClick={hdlAsignID}>generar</button>
-                    <div className="form-text" id="emailHelp">Procure que este valor sea único</div>
+                    <p className="h5 text-center">
+                        ID ::: {nanoid(8)/*OJO nota 1*/} {/* <!-- txt --> */}
+                    </p>
                 </div>
+                <p>-Ingrese los nuevos datos del producto-</p>
                 {/* <!-- Descripción --> */}
                 <div className="mb-3">
                     <label className="form-label" htmlFor="modalInputProductName">
-                        Descripción {/* <!-- txt --> */}
+                        Nueva descripción {/* <!-- txt --> */}
                     </label>
                     <input value={stRegistro.descripcion} onChange={hdlDesc} placeholder="" className="form-control" id="modalInputProductName" type="text" name="q"/>
                 </div>
                 {/* <!-- Precio --> */}
                 <div className="mb-3">
                     <label className="form-label" htmlFor="modalInputProductPrice">
-                        Valor Unitario {/*<!-- txt -->*/}
+                        Nuevo valor Unitario {/*<!-- txt -->*/}
                     </label>
                     <input value={stRegistro.valor} onChange={hdlVal} className="form-control" id="modalInputProductPrice" type="text"/>
                 </div>
-                <button className="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#myModalProdSucces">Registrar</button>
+                <button className="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#myModalProdSucces">Actualizar</button>
             </form>
         </Fragment>
     )

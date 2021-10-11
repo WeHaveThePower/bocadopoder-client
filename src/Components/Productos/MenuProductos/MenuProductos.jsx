@@ -1,4 +1,7 @@
+
 import React, { Fragment } from 'react'
+import { BotonModal } from './BotonModal'
+
 
 export const MenuProductos = () => {
     return (
@@ -15,14 +18,10 @@ export const MenuProductos = () => {
                         {/* <!-- wrapper de botones --> */}
                         <div className="row">
                             <div className="col-12 col-sm-6 col-md-3 mb-3">
-                                <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModalNewProd">
-                                    Registrar Producto
-                                </button>
+                                <BotonModal btnNumber={1} btnName={"Registro Producto"}/>
                             </div>
                             <div className="col-12 col-sm-6 col-md-3 mb-3">
-                                <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModalUpdateProd">
-                                    Actualizar Producto
-                                </button>
+                                <BotonModal btnNumber={2} btnName={"Actualizar Producto"}/>
                             </div>
                             <div className="col-12 col-sm-6 col-md-3 mb-3">
                                 <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myProductList">
@@ -41,3 +40,5 @@ export const MenuProductos = () => {
         </Fragment>
     )
 }
+
+
