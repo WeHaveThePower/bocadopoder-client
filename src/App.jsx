@@ -16,12 +16,7 @@ function App() {
           Presióname muchas veces
       </Button>
       <section>
-        {(estado % 4 === 0) ? <Dashboard/> : (
-            (estado % 3 === 0) ? <Registrarproducto/> : (
-              (estado % 2 === 0) ? <DashboardWHTP/> : null
-            )
-         )
-        }
+        <DashboardWHTP/>
       </section>
     </div>
   );

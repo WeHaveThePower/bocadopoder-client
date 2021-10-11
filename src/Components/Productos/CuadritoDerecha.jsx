@@ -11,10 +11,10 @@ export default function CuadritoDerecha() {
   return (
     <React.Fragment>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Info
+        Por:
       </Typography>
       <Typography component="p" variant="h4">
-        Akap47
+        Andrés FRP
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         WeHaveThePower
