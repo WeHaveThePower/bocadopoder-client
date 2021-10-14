@@ -2,6 +2,8 @@ import React, { Fragment, useState } from 'react'
 import Modal from '@mui/material/Modal';
 import { Registrarproducto } from '../RegistrarProductos/Registrarproducto'
 import { Actualizarproducto } from '../ActualizarProducto/Actualizarproducto';
+import { PromptOkProducto } from '../RegistrarProductos/PromptOkProducto';
+import { Buscarproducto } from '../BuscarProductos/Buscarproductos';
 
 
 // const style = {
@@ -16,14 +18,18 @@ import { Actualizarproducto } from '../ActualizarProducto/Actualizarproducto';
 //   p: 4,
 // };
 
-export const BotonModal = ({ btnName, btnNumber }) => {
+export const BotonModal = ({ btnName, btnNumber, isDeSubmit, onSubmit }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const onClick = () =>{
+        if(isDeSubmit) onSubmit();
+        handleOpen();
+    }
 
     return (
         <Fragment>
-            <button onClick={handleOpen} className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModalNewProd">
+            <button onClick={onClick} className="btn btn-primary" type="button">
                 {btnName}
             </button>
             <Modal
@@ -32,7 +38,7 @@ export const BotonModal = ({ btnName, btnNumber }) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <div className="modal-dialog text-start text-black fs-6">
+                <div className="modal-dialog text-start text-black">
                     <div className="modal-content">
                         <div className="col-12 modal-header">
                             <h4 className="modal-title" id="myModalLabel">
@@ -43,6 +49,8 @@ export const BotonModal = ({ btnName, btnNumber }) => {
                         <div className="modal-body"> {/*<!-- cuerpo --> */}
                             {btnNumber === 1? <Registrarproducto closeAction={handleClose} /> : null}
                             {btnNumber === 2? <Actualizarproducto closeAction={handleClose} /> : null}
+                            {btnNumber === 3? <Buscarproducto closeAction={handleClose}/>: null}
+                            {btnNumber === 4? <PromptOkProducto closeAction={handleClose} /> : null}
                         </div>
                         <div className="modal-footer">
                             <button onClick={handleClose} className="btn btn-secondary" type="button">

@@ -2,6 +2,8 @@ import {React , Fragment} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { nanoid } from 'nanoid'
 import { useState } from 'react'
+import { BotonModal } from '../MenuProductos/BotonModal'
+
 
 export function Registrarproducto({ closeAction }) {
     const [stRegistro, setStRegistro] = useState({id:'Generar  > >', descripcion:'', valor:'', estado:true}); //, estado:true
@@ -27,7 +29,7 @@ export function Registrarproducto({ closeAction }) {
 
     const hdlForm = (e)=>{
         e.preventDefault();
-
+        
         let id = stRegistro.id;
         let desc = stRegistro.descripcion;
         let val = stRegistro.valor;
@@ -36,8 +38,6 @@ export function Registrarproducto({ closeAction }) {
             return;
         }
         
-        let jsonProd = stRegistro;
-        console.log(jsonProd)
         setStRegistro({id:'Generar  > >', descripcion:'', valor:'', estado:true})
         
         hdlClose();
@@ -46,7 +46,7 @@ export function Registrarproducto({ closeAction }) {
     return (
         <Fragment>
             <p>Ingrese los datos del nuevo producto.</p>
-            <form onSubmit={hdlForm}>
+            <form id="forma-registro-prod" onSubmit={hdlForm}>
                 {/* <!-- ID --> */}
                 <div className="mb-3">
                     <label className="form-label" htmlFor="inputProductID">
@@ -69,6 +69,7 @@ export function Registrarproducto({ closeAction }) {
                         Valor Unitario {/*<!-- txt -->*/}
                     </label>
                     <input value={stRegistro.valor} onChange={hdlVal} className="form-control" id="modalInputProductPrice" type="text"/>
+                    <BotonModal btnNumber={4} btnName={"Estado del Registro"}/>
                 </div>
                 <button className="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#myModalProdSucces">Registrar</button>
             </form>
