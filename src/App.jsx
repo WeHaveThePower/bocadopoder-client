@@ -12,9 +12,6 @@ function App() {
   
   return (  
     <div className="App">
-      <Button size="small" color="secondary" style={{zIndex:1600}} variant="contained" onClick={myToggle}>
-          Presióname muchas veces
-      </Button>
       <section>
         <DashboardWHTP/>
       </section>

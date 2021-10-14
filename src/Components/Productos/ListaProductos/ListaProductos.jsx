@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react'
 
 export const ListaProductos = () => {
     
-    const testJSON = [{id: nanoid(8), descripcion:'Cerveza', valor:'9500', estado:true},
+    const testJSON =  [{id: nanoid(8), descripcion:'Cerveza', valor:'9500', estado:true},
                       {id: nanoid(8), descripcion:'Napoleón', valor:'12500', estado:false},
                       {id: nanoid(8), descripcion:'Sandwich', valor:'11500', estado:false},
                       {id: nanoid(8), descripcion:'Funcionó, hp!!!', valor:'Infinito', estado:true},
