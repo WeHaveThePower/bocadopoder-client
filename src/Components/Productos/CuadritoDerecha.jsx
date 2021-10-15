@@ -14,16 +14,15 @@ export default function CuadritoDerecha() {
         Por:
       </Typography>
       <Typography component="p" variant="h4">
-        Andrés FRP
+        Andrés Roca P.
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         WeHaveThePower
       </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          MisiónTIC 2022
-        </Link>
-      </div>
+      
+      <Link color="primary" href="#" onClick={preventDefault}>
+        MisiónTIC 2022
+      </Link>
     </React.Fragment>
   );
 }
