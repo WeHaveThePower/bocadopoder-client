@@ -22,14 +22,14 @@ export const ListaProductos = () => {
 
     return (
         <Fragment>
-            <div class="col-lg-12">
-                <div class="card mb-0">
-                    <div class="card-header">
-                        <h3 class="h4 mb-0 text-center">Listado total de productos</h3>
+            <div className="col-lg-12">
+                <div className="card mb-0">
+                    <div className="card-header">
+                        <h3 className="h4 mb-0 text-center">Listado total de productos</h3>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table mb-0 table-striped table-hover">
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            <table className="table mb-0 table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -48,10 +48,10 @@ export const ListaProductos = () => {
                                         </tr>
                                     ))}
                                     <tr>
-                                        <th class="border-bottom-0" scope="row"></th>
-                                        <td class="border-bottom-0"></td>
-                                        <td class="border-bottom-0"></td>
-                                        <td class="border-bottom-0"></td>
+                                        <th className="border-bottom-0" scope="row"></th>
+                                        <td className="border-bottom-0"></td>
+                                        <td className="border-bottom-0"></td>
+                                        <td className="border-bottom-0"></td>
                                     </tr>
                                 </tbody>
                             </table>
