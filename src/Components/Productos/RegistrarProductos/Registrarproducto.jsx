@@ -1,57 +1,57 @@
 import {React , Fragment, useState, useEffect} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
 
 import { guardarDatabase } from '../../../Functionalities/Firebase/Controllers/Producto/Productos'
-import { ModalModal } from '../MenuProductos/ModalModal'
+import AlertAndres from '../MenuProductos/AlertAndres'
+
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 
 
-export function Registrarproducto({ closeAction }) {
-    const [stRegistro, setStRegistro] = useState({id:'Generar  > >', descripcion:'', valor:'', estado:true}); //, estado:true
-
-    //Modal grandpa's managing
-    const [openM, setOpenM] = useState(false);
-    const hdlOpenM = () => setOpenM(true);
-    const hdlCloseM = () => setOpenM(false);
-
-    const hdlAsignID = ()=>{ setStRegistro((prevState)=>({...prevState, id:nanoid(8)})) }
+export function Registrarproducto({ closeAction, tipo }) {
+    const nanoidCA = customAlphabet('0123456789JHKQ', 6)
+    const [stRegistro, setStRegistro] = useState({id:nanoidCA(), descripcion:'', valor:'', estado:null}); //, estado:true
+    const [stEnvio, setStEnvio] = useState({isGood:false, dbid:'', show:false});
 
     const hdlDesc = (e)=>{ setStRegistro((prevState)=>({...prevState, descripcion:e.target.value})) }
     
     const hdlVal = (e)=>{ setStRegistro((prevState)=>({...prevState, valor:e.target.value})) }
 
-    const hdlClose = ()=>{ closeAction(); };
+    const hdlEstado = (b)=>{ setStRegistro((priorState)=>({...priorState, estado:b})) }
 
     const hdlForm = async (e)=>{
+
         e.preventDefault();
         let id = stRegistro.id, desc = stRegistro.descripcion, val = stRegistro.valor;
-        if(id === 'Generar  > >' || desc.trim() === '' || val.trim() === ''){
-            alert('Faltan datos');
+        if(!id || !desc.trim() || !val.trim() || stRegistro.estado === null){
+            setStEnvio({isGood:false, dbid:'', show:true});
             return;
         }
         
-        guardarDatabase('productos', stRegistro)
-        hdlOpenM();
+        const resp  = await guardarDatabase('productos', stRegistro);
+        console.log(resp);
+        console.log(stRegistro);
         
-        setStRegistro({id:'Generar  > >', descripcion:'', valor:'', estado:true})
-        // hdlClose();
+        setStRegistro({id:nanoidCA(), descripcion:'', valor:'', estado:true})
+        setTimeout(()=>(setStEnvio({isGood:true, dbid:resp.id, show:true})),200);
+        
     }
 
-    // useEffect(()=>{
-
-    // }, [openM])
+    useEffect(()=>{
+        setStEnvio({dbid:'', show:false, isGood:stEnvio.isGood});
+    },[stRegistro.descripcion, stRegistro.valor, stRegistro.estado])
 
     return (
         <Fragment>
-            <p>Ingrese los datos del nuevo producto.</p>
+            <AlertAndres from={"Registro"} showMe={stEnvio.show} isGood={stEnvio.isGood} props={{DBid : stEnvio.dbid,}}/>
             <form id="forma-registro-prod" onSubmit={hdlForm}>
                 <div className="mb-3">
                     <label className="form-label" htmlFor="inputProductID">
-                        ID del producto </label>
-                    <input onClick={hdlAsignID} value={stRegistro.id} disabled className="form-control" id="inputProductID" aria-describedby="emailHelp"/>
-                    <button type="button" className="float-end" onClick={hdlAsignID}>
-                        generar </button>
-                    <div className="form-text" id="emailHelp">Procure que este valor sea único</div>
+                        Quedará con la siguiente ID local </label>
+                    <input value={stRegistro.id} disabled className="form-control"/>
                 </div>
                 <div className="mb-3">
                     <label className="form-label" htmlFor="modalInputProductName">
@@ -64,10 +64,20 @@ export function Registrarproducto({ closeAction }) {
                     <input value={stRegistro.valor} onChange={hdlVal} className="form-control" id="modalInputProductPrice" type="text"/>
                     {/* <BotonModal btnNumber={4} btnName={"Estado del Registro"}/> */}
                 </div>
-                <button className="btn btn-primary" type="submit">
-                    Registrar </button>
+                <FormControl component="fieldset">
+                    <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
+                        <FormControlLabel onClick={()=>(hdlEstado(true))} value="yes" control={<Radio />} label="Disponible" />
+                        <span>&nbsp;</span>
+                        <FormControlLabel onClick={()=>(hdlEstado(false))} value="no" control={<Radio />} label="No disponible" />
+                    </RadioGroup>
+                </FormControl>
+                <div className="text-center">
+                    <button className="btn btn-primary" type="submit">
+                        Registrar </button>
+                </div>
             </form>
-            <ModalModal modalName={'Estado del Registro'} modalNumber={4} openMe={openM} closeFunc={hdlCloseM} />
+            {/* <ModalModal modalName={'Estado del Registro'} modalNumber={4} openMe={openM} closeFunc={hdlCloseM} /> */}
+            
         </Fragment>
     )
 }

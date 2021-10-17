@@ -2,6 +2,12 @@
 import React, { Fragment } from 'react'
 import { BotonModal } from './BotonModal'
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+
+
 
 export const MenuProductos = () => {
     return (
@@ -20,11 +26,32 @@ export const MenuProductos = () => {
                             <div className="col-12 col-sm-6 col-md-3 mb-3">
                                 <BotonModal btnNumber={1} btnName={"Registro Producto"}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 mb-3">
-                                <BotonModal btnNumber={2} btnName={"Actualizar Producto"}/>
-                            </div>
-                            <div className="col-12 col-sm-6 col-md-3 ">
-                                <BotonModal btnNumber={3} btnName={"Buscar Producto"}/>
+                            <div className="col-12 col-sm-6 col-md-9">
+                                <div className="input-group">
+                                    <div className="row">
+                                        <input type="text" className="form-control bg-light border-3" placeholder="Search for..."
+                                                aria-label="Search" aria-describedby="basic-addon2"/>
+                                    </div>
+                                    <div className="row">
+                                        <FormControl component="fieldset">
+                                            <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
+                                                <FormControlLabel value="byID" control={<Radio />} label="ID" />
+                                                <FormControlLabel value="byDESC" control={<Radio />} label="Desc." />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </div>
+                                    <div className="input-group-append">
+                                        <button className="btn btn-primary mx-2" type="button"> 
+                                            Buscar
+                                        </button>
+                                    </div>
+                                    <div className="input-group-append">
+                                        <button className="btn btn-primary mx-2" type="button">
+                                            Limpiar
+                                        </button>
+                                    </div>
+                                </div>
+                                {/* <BotonModal btnNumber={3} btnName={"Buscar Producto"}/> */}
                             </div>
                         </div>
                     </div>

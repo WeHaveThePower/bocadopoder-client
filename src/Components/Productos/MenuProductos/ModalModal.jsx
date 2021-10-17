@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Modal from '@mui/material/Modal';
 import { Registrarproducto } from '../RegistrarProductos/Registrarproducto'
-import { Actualizarproducto } from '../ActualizarProducto/Actualizarproducto';
 import { PromptOkProducto } from '../RegistrarProductos/PromptOkProducto';
+import { PromptOkUpdate } from '../ActualizarProducto/PromptOkUpdate';
 import { Buscarproducto } from '../BuscarProductos/Buscarproductos';
 
-
-export const ModalModal = ({ modalName, modalNumber, openMe, closeFunc }) => {
+export const ModalModal = ({ modalName, modalNumber, openMe, closeFunc, props }) => {
     
     const handleClose = () => closeFunc();
     
@@ -26,10 +25,11 @@ export const ModalModal = ({ modalName, modalNumber, openMe, closeFunc }) => {
                         <button onClick={handleClose} className="btn-close" type="button" aria-label="Close"></button>
                     </div>
                     <div className="modal-body"> {/*<!-- cuerpo --> */}
-                        {modalNumber === 1? <Registrarproducto closeAction={handleClose} /> : null}
-                        {modalNumber === 2? <Actualizarproducto closeAction={handleClose} /> : null}
+                        {modalNumber === 1? <Registrarproducto closeAction={handleClose} tipo={"create"} /> : null}
+                        {modalNumber === 2? <Registrarproducto closeAction={handleClose} tipo={"update"}/> : null}
                         {modalNumber === 3? <Buscarproducto closeAction={handleClose}/>: null}
                         {modalNumber === 4? <PromptOkProducto closeAction={handleClose} /> : null}
+                        {modalNumber === 5? <PromptOkUpdate closeAction={handleClose} /> : null}
                     </div>
                     <div className="modal-footer">
                         <button onClick={handleClose} className="btn btn-secondary" type="button">
