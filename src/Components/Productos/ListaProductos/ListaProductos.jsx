@@ -1,28 +1,10 @@
-import { customAlphabet } from 'nanoid';
+
 import React, { Fragment, useState } from 'react'
 import { BotonModal } from '../MenuProductos/BotonModal';
 
-export const ListaProductos = () => {
+export const ListaProductos = ( props ) => {
     
-    const nanoidC = customAlphabet('0123456789HJKQ', 6);
-
-    const testJSON =  [{id: nanoidC(), descripcion:'Cerveza', valor:'9500', estado:true},
-                      {id: nanoidC(), descripcion:'Napoleón', valor:'12500', estado:false},
-                      {id: nanoidC(), descripcion:'Sandwich', valor:'11500', estado:false},
-                      {id: nanoidC(), descripcion:'Funcionó, hp!!!', valor:'Infinito', estado:true},
-                      {id: nanoidC(), descripcion:'Cerveza', valor:'9500', estado:true},
-                      {id: nanoidC(), descripcion:'Napoleón', valor:'12500', estado:false},
-                      {id: nanoidC(), descripcion:'Sandwich', valor:'11500', estado:false},
-                      {id: nanoidC(), descripcion:'Funcionó, hp!!!', valor:'Infinito', estado:true},
-                      {id: nanoidC(), descripcion:'Cerveza', valor:'9500', estado:true},
-                      {id: nanoidC(), descripcion:'Napoleón', valor:'12500', estado:false},
-                      {id: nanoidC(), descripcion:'Sandwich', valor:'11500', estado:false},
-                      {id: nanoidC(), descripcion:'Funcionó, hp!!!', valor:'Infinito', estado:true}
-    ];
-    
-    const listaProd = testJSON; // dbTraerProductos('productos');
-    
-    const [stLista, setStLista] = useState(listaProd);
+    // const [stLista, setStLista] = useState([...inputList]);
 
     return (
         <Fragment>
@@ -44,13 +26,13 @@ export const ListaProductos = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {stLista.map((elem)=>(
+                                    {props.totalList.map((elem)=>(
                                         <tr key={elem.id}>
                                             <th scope="row">{elem.id}</th>
                                             <td>{elem.descripcion}</td>
                                             <td>{elem.valor}</td>
                                             <td>{elem.estado ? "SI" : "NO"}</td>
-                                            <td> <BotonModal btnName={'Editar'} btnNumber={2} props={{id:elem.id}}/></td>
+                                            <td> <BotonModal btnName={'Editar'} btnNumber={2} curElem={elem} propsLP={props}/></td>
                                         </tr>
                                     ))}
                                     <tr>

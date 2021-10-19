@@ -2,7 +2,7 @@ import {React , Fragment, useState, useEffect} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { customAlphabet } from 'nanoid'
 
-import { guardarDatabase } from '../../../Functionalities/Firebase/Controllers/Producto/Productos'
+import { actualizarDocumentoDatabase, guardarDatabase } from '../../../Functionalities/Firebase/Controllers/Producto/Productos'
 import AlertAndres from '../MenuProductos/AlertAndres'
 
 import Radio from '@mui/material/Radio';
@@ -11,9 +11,28 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-export function Registrarproducto({ closeAction, tipo }) {
+export function Registrarproducto( props ) {
+
+    console.log(props);
+    const { isCreate } = props;
     const nanoidCA = customAlphabet('0123456789JHKQ', 6)
-    const [stRegistro, setStRegistro] = useState({id:nanoidCA(), descripcion:'', valor:'', estado:null}); //, estado:true
+    let hdlAddListDBx;
+    let myElement = {}
+    let myDbid = '';
+    
+    if (isCreate) {
+        myElement = {id: nanoidCA(), descripcion:'', valor:'', estado:null};
+        hdlAddListDBx = () => {props.propsMM.propsBM.propsMP.hdlAddListDB();};
+    }else{
+        myElement = { id: props.propsMM.propsBM.curElem.id,
+                      descripcion: props.propsMM.propsBM.curElem.descripcion,
+                      valor: props.propsMM.propsBM.curElem.valor,
+                      estado: props.propsMM.propsBM.curElem.estado}
+        myDbid = props.propsMM.propsBM.curElem.dbid;
+        hdlAddListDBx = () => {props.propsMM.propsBM.propsLP.hdlAddListDB();};
+    }
+    
+    const [stRegistro, setStRegistro] = useState(myElement);
     const [stEnvio, setStEnvio] = useState({isGood:false, dbid:'', show:false});
 
     const hdlDesc = (e)=>{ setStRegistro((prevState)=>({...prevState, descripcion:e.target.value})) }
@@ -21,37 +40,47 @@ export function Registrarproducto({ closeAction, tipo }) {
     const hdlVal = (e)=>{ setStRegistro((prevState)=>({...prevState, valor:e.target.value})) }
 
     const hdlEstado = (b)=>{ setStRegistro((priorState)=>({...priorState, estado:b})) }
+    
+
+    const hdlCreation = async ()=>{
+        const resp  =  await guardarDatabase('productos', stRegistro)
+        setStRegistro({id:nanoidCA(), descripcion:'', valor:'', estado:null  })
+        setTimeout(()=>(setStEnvio({isGood:true, dbid:resp.id, show:true})),100);
+    }
+
+    const hdlUpdating = async ()=>{
+        const resp = await actualizarDocumentoDatabase('productos', myDbid, stRegistro)
+        console.log(resp);
+        setTimeout(()=>(setStEnvio({isGood:true, dbid:myDbid, show:true})),100);
+    }
 
     const hdlForm = async (e)=>{
 
         e.preventDefault();
-        let id = stRegistro.id, desc = stRegistro.descripcion, val = stRegistro.valor;
-        if(!id || !desc.trim() || !val.trim() || stRegistro.estado === null){
+        if(!stRegistro.id || !stRegistro.descripcion.trim() || !stRegistro.valor.trim() || stRegistro.estado === null){
             setStEnvio({isGood:false, dbid:'', show:true});
             return;
         }
+
+        if(isCreate) await hdlCreation();
+        else await hdlUpdating();
         
-        const resp  = await guardarDatabase('productos', stRegistro);
-        console.log(resp);
-        console.log(stRegistro);
-        
-        setStRegistro({id:nanoidCA(), descripcion:'', valor:'', estado:true})
-        setTimeout(()=>(setStEnvio({isGood:true, dbid:resp.id, show:true})),200);
-        
+        hdlAddListDBx();
     }
 
     useEffect(()=>{
-        setStEnvio({dbid:'', show:false, isGood:stEnvio.isGood});
+        setStEnvio({show:false, isGood:stEnvio.isGood});
     },[stRegistro.descripcion, stRegistro.valor, stRegistro.estado])
 
     return (
         <Fragment>
-            <AlertAndres from={"Registro"} showMe={stEnvio.show} isGood={stEnvio.isGood} props={{DBid : stEnvio.dbid,}}/>
+            <AlertAndres from={"Registro"} showMe={stEnvio.show} isGood={stEnvio.isGood} props={{DBid : stEnvio.dbid}}/>
             <form id="forma-registro-prod" onSubmit={hdlForm}>
                 <div className="mb-3">
                     <label className="form-label" htmlFor="inputProductID">
-                        Quedará con la siguiente ID local </label>
+                        El registro <strong>quedará</strong> con la siguiente <strong>ID</strong> local </label>
                     <input value={stRegistro.id} disabled className="form-control"/>
+                    {isCreate ? null:<label>---id en la DDBB : {myDbid}</label>}
                 </div>
                 <div className="mb-3">
                     <label className="form-label" htmlFor="modalInputProductName">
@@ -66,9 +95,9 @@ export function Registrarproducto({ closeAction, tipo }) {
                 </div>
                 <FormControl component="fieldset">
                     <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
-                        <FormControlLabel onClick={()=>(hdlEstado(true))} value="yes" control={<Radio />} label="Disponible" />
+                        <FormControlLabel onClick={()=>(hdlEstado(true))} value="yes" control={<Radio checked={stRegistro.estado} />} label="Disponible" />
                         <span>&nbsp;</span>
-                        <FormControlLabel onClick={()=>(hdlEstado(false))} value="no" control={<Radio />} label="No disponible" />
+                        <FormControlLabel onClick={()=>(hdlEstado(false))} value="no" control={<Radio checked={stRegistro.estado === null? false:!stRegistro.estado}/>} label="No disponible" />
                     </RadioGroup>
                 </FormControl>
                 <div className="text-center">
