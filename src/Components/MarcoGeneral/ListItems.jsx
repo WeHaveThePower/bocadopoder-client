@@ -37,7 +37,7 @@ export function MainListItems({ clickAction }){
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      <ListItem button button onClick={hdlClickVentas}>
+      <ListItem button onClick={hdlClickVentas}>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
