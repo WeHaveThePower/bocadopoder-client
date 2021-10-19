@@ -11,9 +11,9 @@ import reportWebVitals from './reportWebVitals';
 // console.log(dbManager)
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
+  // <React.StrictMode>
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

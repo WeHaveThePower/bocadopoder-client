@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { ModalModal } from './ModalModal';
 
 
-export const BotonModal = ({ btnName, btnNumber, props }) => {
+export const BotonModal = ( props ) => {
 
     //Modal grandpa's managing
     const [openFromF, setOpenFF] = useState(false);
@@ -12,8 +12,8 @@ export const BotonModal = ({ btnName, btnNumber, props }) => {
     return (
         <Fragment>
             <button onClick={handleOpen} className="btn btn-primary" type="button">
-                {btnName}</button>
-            <ModalModal modalName={btnName} modalNumber={btnNumber} openMe={openFromF} closeFunc={handleClose} props={props}/>
+                {props.btnName}</button>
+            <ModalModal modalName={props.btnName} modalNumber={props.btnNumber} openMe={openFromF} closeFunc={handleClose} propsBM={props}/>
         </Fragment>
     );
 }
