@@ -1,3 +1,9 @@
+/*
+Por: Andrés Roca
+github: @andresrokp
+basado en: material-ui dashboard
+*/
+
 import React from 'react';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';

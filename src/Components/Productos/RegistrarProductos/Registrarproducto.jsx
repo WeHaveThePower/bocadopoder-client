@@ -1,3 +1,9 @@
+/*
+Por: Andrés Roca
+github: @andresrokp
+basado en: material-ui dashboard
+*/
+
 import {React , Fragment, useState, useEffect} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { customAlphabet } from 'nanoid'

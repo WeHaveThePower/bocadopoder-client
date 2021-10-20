@@ -1,3 +1,9 @@
+/*
+Por: Andrés Roca
+github: @andresrokp
+basado en: material-ui dashboard
+*/
+
 import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
