@@ -1,25 +1,16 @@
+/*
+Por: Andrés Roca
+github: @andresrokp
+basado en: material-ui dashboard
+*/
+
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { MenuProductos } from './MenuProductos/MenuProductos';
 import { ListaProductos } from './ListaProductos/ListaProductos';
 import CuadritoDerecha from './CuadritoDerecha';
-import { customAlphabet } from 'nanoid';
 import { consultarDatabase } from '../../Functionalities/Firebase/Controllers/Producto/Productos';
-
-// const nanoidC = customAlphabet('0123456789HJKQ', 6);
-// const testJSON =  [{id: nanoidC(), descripcion:'TestProd111', valor:'9000', estado:true},
-//                   {id: nanoidC(), descripcion:'TestProd222', valor:'10000', estado:false},
-//                   {id: nanoidC(), descripcion:'TestProd333', valor:'11000', estado:false},
-//                   {id: nanoidC(), descripcion:'TopOfTheWorld,Ma!', valor:'12000', estado:true}
-//                   ];
-
-// let fromDB = (testJSON) => async ()=>{
-//   const resp = await consultarDatabase('productos');
-//   console.log('fromDB ~~'+resp);
-//   return resp || testJSON;
-// };
-
 
 
 /*  x   x   x
@@ -27,10 +18,9 @@ VERY IMPORTANT SHIT : BROKEN CONNECTION HANDLING ¿¿¿???
 VERY IMPORTANT SHIT : EMPTY COLLECTION HANDLING ¿¿¿???  --> stupid approach: remove the async await in productos.js
 x   x   x*/
 
-export function MainContentProductos() {
-
+export function MainContentProductos(){
   const [appListDB, setAppListDB] = useState([])
-  const [searchProps, setSearchProps] = useState({on: false, key:''})
+  const [searchKey, setSearchKey] = useState('');
   const [refreshFlag, setRefFlag] = useState(false);
 
   const loadElems = async ()=>{
@@ -43,6 +33,11 @@ export function MainContentProductos() {
   useEffect(()=>{
     loadElems();
   },[refreshFlag])
+
+  const filteredList = appListDB.filter((prod)=>(prod.descripcion.toLowerCase().includes(searchKey.toLowerCase())
+                                                || prod.id.toLowerCase().includes(searchKey.toLowerCase())))
+  
+   
   
   
   return (
@@ -55,7 +50,7 @@ export function MainContentProductos() {
             flexDirection: 'column',
           }}
         >
-          <MenuProductos hdlAddListDB={hdlAddListDBd} setSearchProps={setSearchProps} />
+          <MenuProductos hdlAddListDB={hdlAddListDBd} setSearchKey={setSearchKey}/>
         </Paper>
       </Grid>
       <Grid item xs={12} md={3}>
@@ -71,7 +66,7 @@ export function MainContentProductos() {
       </Grid>
       <Grid item xs={12}>
         <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-          <ListaProductos hdlAddListDB={hdlAddListDBd} totalList={appListDB} searchProps={searchProps} />
+          <ListaProductos hdlAddListDB={hdlAddListDBd} totalList={filteredList} searchKey={searchKey} />
         </Paper>
       </Grid>
     </React.Fragment>

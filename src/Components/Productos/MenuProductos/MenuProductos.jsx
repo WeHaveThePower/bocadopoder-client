@@ -1,11 +1,12 @@
 
+/*
+Por: Andrés Roca
+github: @andresrokp
+basado en: material-ui dashboard
+*/
+
 import React, { Fragment } from 'react'
 import { BotonModal } from './BotonModal'
-
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import { Buscarproducto } from '../BuscarProductos/Buscarproductos';
 
 
@@ -24,7 +25,7 @@ export const MenuProductos = ( props ) => {
                                 <BotonModal btnNumber={1} btnName={"Registro Producto"} propsMP={props}/>
                             </div>
                             <div className="col-12 col-sm-6 col-md-9">
-                                <Buscarproducto/>
+                                <Buscarproducto propsMP={props}/>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,9 @@
+/*
+Por: Andrés Roca
+github: @andresrokp
+basado en: material-ui dashboard
+*/
+
 import React from 'react'
 import Modal from '@mui/material/Modal';
 import { Registrarproducto } from '../RegistrarProductos/Registrarproducto'
